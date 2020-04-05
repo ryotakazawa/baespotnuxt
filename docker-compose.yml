@@ -9,7 +9,7 @@ services:
     volumes:
       - ./backend/tmp/db:/var/lib/postgresql/data
 
-  back:
+  backend:
     container_name: baespotnuxt_backend
     build: backend/
     volumes:
@@ -19,7 +19,7 @@ services:
     ports:
       - 3000:3000
 
-  front:
+  frontend:
     container_name: baespotnuxt_frontend
     build: frontend/
     command: npm run dev
