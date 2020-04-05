@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  db:
+    container_name: baespotnuxt_db
+    image: postgres:11.4-alpine
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./backend/tmp/db:/var/lib/postgresql/data
+
+  back:
+    container_name: baespotnuxt_backend
+    build: backend/
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+
+  front:
+    container_name: baespotnuxt_frontend
+    build: frontend/
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+    ports:
+      - 8080:3000
