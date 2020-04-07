@@ -38,7 +38,14 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/vuetify',
+    '@nuxtjs/axios'
   ],
+  axios: {
+    host: 'localhost',
+    port: 8080,
+    prefix: '/api'
+  },
   /*
   ** Build configuration
   */
