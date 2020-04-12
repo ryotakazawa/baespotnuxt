@@ -1,15 +1,15 @@
-FROM node:12.5.0-alpine
+FROM node:10
 
-ENV HOME="/app" \
-    LANG=C.UTF-8 \
-    TZ=Asia/Tokyo 
+ARG UID
+RUN adduser frontend --uid $UID --disabled-password --gecos ""
 
-WORKDIR ${HOME}
+ENV APP /usr/src/app
+RUN mkdir $APP
+WORKDIR $APP
 
-RUN apk update && \
-    apk upgrade && \
-    npm install -g npm && \
-    npm install -g @vue/cli
+COPY package.json yarn.lock $APP/
+RUN yarn
 
-ENV HOST 0.0.0.0
-EXPOSE 3000
+COPY . $APP/
+
+CMD ["yarn", "run", "dev"]
