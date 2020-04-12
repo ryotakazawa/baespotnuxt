@@ -1,24 +1,22 @@
-FROM ruby:2.6.3-alpine3.10
+FROM ruby:2.6.3
 
-ENV RUNTIME_PACKAGES="linux-headers libxml2-dev make gcc libc-dev nodejs tzdata postgresql-dev postgresql" \
-    DEV_PACKAGES="build-base curl-dev" \
-    HOME="/app" \
-    LANG=C.UTF-8 \
-    TZ=Asia/Tokyo
+ARG UID
+RUN adduser rails --uid $UID --disabled-password --gecos ""
 
-WORKDIR ${HOME}
+ENV APP /usr/src/app
+RUN mkdir $APP
+WORKDIR $APP
 
-ADD Gemfile ${HOME}/Gemfile
-ADD Gemfile.lock ${HOME}/Gemfile.lock
+COPY Gemfile* $APP/
+RUN bundle install -j3 --path vendor/bundle
 
-RUN apk update && \
-    apk upgrade && \
-    apk add --update --no-cache ${RUNTIME_PACKAGES} && \
-    apk add --update --virtual build-dependencies --no-cache ${DEV_PACKAGES} && \
-    apk add vim && \
-    bundle install -j4 && \
-    apk del build-dependencies
+RUN ["apt-get", "update"]
+RUN ["apt-get", "install", "-y", "vim"]
 
-ADD . ${HOME}
+COPY . $APP/
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
+CMD ["bundle", "exec", "rails", "server", "-p", "8080", "-b", "0.0.0.0"]
