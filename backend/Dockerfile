@@ -15,6 +15,8 @@ RUN ["apt-get", "install", "-y", "vim"]
 
 COPY . $APP/
 
+ENV RUBYOPT -EUTF-8
+
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
