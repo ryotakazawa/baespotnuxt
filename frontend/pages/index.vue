@@ -40,7 +40,6 @@ export default {
     return {
       title: 'BaeSpot!! --近くのバエをサクっと探そう--',
       titleTemplate: ''
-      //titleTemplate: '', hide titleTemplate
     }
   }
 }
