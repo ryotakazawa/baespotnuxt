@@ -6,7 +6,7 @@
           color="deep-purple accent-4"
           dense
           dark
-          fixed
+          
         >
           <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
