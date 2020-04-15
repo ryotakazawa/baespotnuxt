@@ -32,9 +32,16 @@
 import Logo from '~/components/Logo.vue'
 
 export default {
-  middleware: ['auth'],
+  //middleware: ['auth'],
   components: {
     Logo
+  },
+  head () {
+    return {
+      title: 'BaeSpot!! --近くのバエをサクっと探そう--',
+      titleTemplate: ''
+      //titleTemplate: '', hide titleTemplate
+    }
   }
 }
 </script>
