@@ -35,3 +35,6 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+#Wait 60seconds
+worker_timeout (24*60*60) if ENV['RAILS_ENV']=='development'
